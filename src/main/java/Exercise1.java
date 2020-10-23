@@ -10,12 +10,8 @@ public class Exercise1 {
     private final Integer inspectorId;
 
     public boolean isEdible() {
-        if (this.expirationDate.isAfter(LocalDate.now()) &&
+        return this.expirationDate.isAfter(LocalDate.now()) &&
                 this.approvedForConsumption == true &&
-                this.inspectorId != null) {
-            return true;
-        } else {
-            return false;
-        }
+                this.inspectorId != null;
     }
 }
