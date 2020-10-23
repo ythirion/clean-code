@@ -1,27 +1,20 @@
+import lombok.AllArgsConstructor;
+
 import java.time.LocalDate;
 
+@AllArgsConstructor
 public class Exercise1 {
 
-    private LocalDate expirationDate;
-    private Boolean approvedForConsumption;
-    private Integer inspectorId;
+    private final LocalDate expirationDate;
+    private final Boolean approvedForConsumption;
+    private final Integer inspectorId;
 
-    public Exercise1(LocalDate expirationDate, Boolean approvedForConsumption, Integer inspectorId) {
-        this.expirationDate = expirationDate;
-        this.approvedForConsumption = approvedForConsumption;
-        this.inspectorId = inspectorId;
-    }
-
-    public boolean isEdible()
-    {
+    public boolean isEdible() {
         if (this.expirationDate.isAfter(LocalDate.now()) &&
                 this.approvedForConsumption == true &&
-                this.inspectorId != null)
-        {
+                this.inspectorId != null) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
