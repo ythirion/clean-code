@@ -1,17 +1,12 @@
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Exercise2 {
     public String toArrivalTable(List<LocalDate> arrivalTimes) {
-        StringBuilder arrivalTable = new StringBuilder();
-
-        for (LocalDate flightArrival : arrivalTimes) {
-            if (flightArrival.isAfter(LocalDate.now())) {
-                arrivalTable.append(flightArrival + "\n");
-            } else {
-                arrivalTable.append("Delayed\n");
-            }
-        }
-        return arrivalTable.toString();
+        return arrivalTimes.stream()
+                .map(flightArrival ->
+                        flightArrival.isAfter(LocalDate.now()) ? flightArrival + "\n" : "Delayed\n")
+                .collect(Collectors.joining());
     }
 }
