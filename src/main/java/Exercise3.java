@@ -4,25 +4,39 @@ import lombok.Getter;
 public class Exercise3 {
 
     public class DiscountManager {
-        public double calculate(double amount, CustomerStatus customerStatus, int years) {
+        public static final int MAXIMUM_DISCOUNT_FOR_LOYALTY = 5;
+        public static final double DISCOUNT_FOR_SIMPLE_CUSTOMERS = 0.1;
+        public static final double DISCOUNT_FOR_VALUABLE_CUSTOMERS = 0.3;
+        public static final double DISCOUNT_FOR_MOST_VALUABLE_CUSTOMERS = 0.5;
+
+        public double calculate(double price,
+                                CustomerStatus customerStatus,
+                                int yearsSinceAccountCreation) {
             double priceAfterDiscount = 0;
-            double disc = (years > 5) ? (double) 5 / 100 : (double) years / 100;
+            double discountForLoyalty = calculateDiscountForLoyalty(yearsSinceAccountCreation);
 
             switch (customerStatus) {
                 case NOT_REGISTERED:
-                    priceAfterDiscount = amount;
+                    priceAfterDiscount = price;
                     break;
                 case SIMPLE:
-                    priceAfterDiscount = (amount - (0.1 * amount)) - disc * (amount - (0.1 * amount));
+                    priceAfterDiscount = (price - (DISCOUNT_FOR_SIMPLE_CUSTOMERS * price));
+                    priceAfterDiscount = priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
                     break;
                 case VALUABLE:
-                    priceAfterDiscount = (0.7 * amount) - disc * (0.7 * amount);
+                    priceAfterDiscount = (price - (DISCOUNT_FOR_VALUABLE_CUSTOMERS * price));
+                    priceAfterDiscount = priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
                     break;
                 case MOST_VALUABLE:
-                    priceAfterDiscount = (amount - (0.5 * amount)) - disc * (amount - (0.5 * amount));
+                    priceAfterDiscount = (price - (DISCOUNT_FOR_MOST_VALUABLE_CUSTOMERS * price));
+                    priceAfterDiscount = priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
                     break;
             }
             return priceAfterDiscount;
+        }
+
+        private double calculateDiscountForLoyalty(int yearsSinceAccountCreation) {
+            return (yearsSinceAccountCreation > 5) ? MAXIMUM_DISCOUNT_FOR_LOYALTY / 100 : yearsSinceAccountCreation / 100;
         }
     }
 
