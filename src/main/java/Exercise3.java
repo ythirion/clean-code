@@ -3,17 +3,19 @@ import lombok.Getter;
 
 public class Exercise3 {
 
+    @AllArgsConstructor
     public class DiscountCalculator {
-        public static final int MAXIMUM_DISCOUNT_FOR_LOYALTY = 5;
         public static final double DISCOUNT_FOR_SIMPLE_CUSTOMERS = 0.1;
         public static final double DISCOUNT_FOR_VALUABLE_CUSTOMERS = 0.3;
         public static final double DISCOUNT_FOR_MOST_VALUABLE_CUSTOMERS = 0.5;
+
+        private final LoyaltyDiscountCalculator loyaltyDiscountCalculator;
 
         public double calculate(double price,
                                 CustomerStatus customerStatus,
                                 int yearsSinceAccountCreation) {
             double priceAfterDiscount = 0;
-            double discountForLoyalty = calculateDiscountForLoyalty(yearsSinceAccountCreation);
+            double discountForLoyalty = loyaltyDiscountCalculator.calculateDiscount(yearsSinceAccountCreation);
 
             switch (customerStatus) {
                 case NOT_REGISTERED:
@@ -38,8 +40,12 @@ public class Exercise3 {
             double priceAfterDiscount = (price - (discountForCustomer * price));
             return priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
         }
+    }
 
-        private double calculateDiscountForLoyalty(int yearsSinceAccountCreation) {
+    public class LoyaltyDiscountCalculator {
+        public static final int MAXIMUM_DISCOUNT_FOR_LOYALTY = 5;
+
+        private double calculateDiscount(int yearsSinceAccountCreation) {
             return (yearsSinceAccountCreation > 5) ? MAXIMUM_DISCOUNT_FOR_LOYALTY / 100 : yearsSinceAccountCreation / 100;
         }
     }
