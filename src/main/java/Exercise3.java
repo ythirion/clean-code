@@ -20,19 +20,23 @@ public class Exercise3 {
                     priceAfterDiscount = price;
                     break;
                 case SIMPLE:
-                    priceAfterDiscount = (price - (DISCOUNT_FOR_SIMPLE_CUSTOMERS * price));
-                    priceAfterDiscount = priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
+                    priceAfterDiscount = calculatePriceAfterDiscount(price, discountForLoyalty, DISCOUNT_FOR_SIMPLE_CUSTOMERS);
                     break;
                 case VALUABLE:
-                    priceAfterDiscount = (price - (DISCOUNT_FOR_VALUABLE_CUSTOMERS * price));
-                    priceAfterDiscount = priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
+                    priceAfterDiscount = calculatePriceAfterDiscount(price, discountForLoyalty, DISCOUNT_FOR_VALUABLE_CUSTOMERS);
                     break;
                 case MOST_VALUABLE:
-                    priceAfterDiscount = (price - (DISCOUNT_FOR_MOST_VALUABLE_CUSTOMERS * price));
-                    priceAfterDiscount = priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
+                    priceAfterDiscount = calculatePriceAfterDiscount(price, discountForLoyalty, DISCOUNT_FOR_MOST_VALUABLE_CUSTOMERS);
                     break;
             }
             return priceAfterDiscount;
+        }
+
+        private double calculatePriceAfterDiscount(double price,
+                                                   double discountForLoyalty,
+                                                   double discountForCustomer) {
+            double priceAfterDiscount = (price - (discountForCustomer * price));
+            return priceAfterDiscount - (discountForLoyalty * priceAfterDiscount);
         }
 
         private double calculateDiscountForLoyalty(int yearsSinceAccountCreation) {
