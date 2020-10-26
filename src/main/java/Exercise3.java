@@ -3,7 +3,7 @@ import lombok.Getter;
 
 public class Exercise3 {
 
-    public class DiscountManager {
+    public class DiscountCalculator {
         public static final int MAXIMUM_DISCOUNT_FOR_LOYALTY = 5;
         public static final double DISCOUNT_FOR_SIMPLE_CUSTOMERS = 0.1;
         public static final double DISCOUNT_FOR_VALUABLE_CUSTOMERS = 0.3;
